@@ -1,0 +1,47 @@
+{
+    "Input": "I have a SnAr  transofmation can be described by two reaction steps; In the first reaction, our nucleophile (reagent) reacts with an aryl chloride (starting material) in the presence of base to give product and base. The product can then react with a second equivalent of the nucleophile (reagent) through a similar mechanism provided above to give by-product, which is the result of a double addition into the aryl chloride (starting material). The first reaction to provide desired product is faster than the rate of formation to form the by-product.The first reaction is first order with respect to starting material, but zero order with respect to reagent and base. The second reaction is first order with respect to product, and zero order with respect to reagent and base.",
+    "Output": {
+      "rxn1": {
+        "reactants": {
+          "starting_material": 1,
+          "reagent": 0,
+          "base": 0
+        },
+        "products": {
+          "product": 1,
+          "base": 1
+        },
+        "k_f": 0.01,
+        "E_f": 70000.0,
+        "reversible": false,
+        "T_ref": 323.15,
+        "Rxn_orders_f": {
+          "starting_material": 1,
+          "reagent": 1,
+          "base": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn2": {
+        "reactants": {
+          "product": 1,
+          "reagent": 0,
+          "base": 0
+        },
+        "products": {
+          "byproduct": 1
+        },
+        "k_f": 0.2,
+        "E_f": 78000.0,
+        "reversible": false,
+        "T_ref": 323.15,
+        "Rxn_orders_f": {
+          "product": 1,
+          "reagent": 1,
+          "base": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    }
+  }
+  

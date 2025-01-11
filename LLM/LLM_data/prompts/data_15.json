@@ -1,0 +1,40 @@
+{
+  "Input": "I have a reaction with starting material and reagent that is coupled together via a [4+2] cycloaddition to give an intermediate species that can decompose thermally via a retro-diels alder to give the desired product plus byproduct. The first step of the mechanism is the addition of the starting material and reagent, that typically react in a cycloaddition reaction via thermal or lewis acid activation to give the intermediate species. This intermediate species is highly strained, and through a irreversible retro-[4+2] reaction that generates product and byproduct, which is typically a gas. This final step is irreversible due to the fact you lose a gas as the byproduct, release ring strain, and generate an aromatic product. These all lead to a reaction that is downhill thermodynamically. Assume first oder dependency with respect for all the reactants.",
+  "Output": {
+    "rxn1": {
+      "reactants": {
+        "SM": 1,
+        "reagent": 1
+      },
+      "products": {
+        "intermediate": 1
+      },
+      "k_f": 100.0,
+      "E_f": 20,
+      "reversible": false,
+      "T_ref": 298.15,
+      "Rxn_orders_f": {
+        "SM": 1,
+        "reagent": 1
+      },
+      "Rxn_orders_b": ""
+    },
+    "rxn2": {
+      "reactants": {
+        "intermediate": 1
+      },
+      "products": {
+        "product": 1,
+        "byproduct": 1
+      },
+      "k_f": 0.2,
+      "E_f": 30,
+      "reversible": false,
+      "T_ref": 298.15,
+      "Rxn_orders_f": {
+        "intermediate": 1
+      },
+      "Rxn_orders_b": ""
+    }
+  }
+}

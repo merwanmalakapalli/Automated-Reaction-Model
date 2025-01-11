@@ -1,0 +1,57 @@
+{
+  "Input": "I have starting material ((E)-(1-chloroprop-1-en-1-yl)benzene) that can isomerize to (Z)-(1-chloroprop-1-en-1-yl)benzene through the addition of an acid as the catalyst to give the intermediate1. The first step of the mechanism is protonation of the double bond of the starting material to give an intermediate with a tertiary carbocation. The second step, this intermediate reversibly rotates to the lower energy intermediate2, which can then be deprotonated by the catalyst (acid) to give the lower energy product as the third reaction. Assume first order dependency for all the reactants.",
+  "Output": {
+    "rxn1": {
+      "reactants": {
+        "SM": 1,
+        "CAT": 1
+      },
+      "products": {
+        "intermediate1": 1
+      },
+      "k_f": 100.0,
+      "E_f": 20,
+      "reversible": true,
+      "T_ref": 298.15,
+      "Rxn_orders_f": {
+        "SM": 1,
+        "CAT": 1
+      },
+      "Rxn_orders_b": ""
+    },
+    "rxn2": {
+      "reactants": {
+        "intermediate1": 1
+      },
+      "products": {
+        "intermediate2": 1
+      },
+      "k_f": 0.2,
+      "E_f": 30,
+      "reversible": true,
+      "T_ref": 298.15,
+      "Rxn_orders_f": {
+        "intermediate1": 1
+      },
+      "Rxn_orders_b": ""
+    },
+    "rxn3": {
+      "reactants": {
+        "intermediate2": 1,
+        "CAT": 1
+      },
+      "products": {
+        "product": 1
+      },
+      "k_f": 0.2,
+      "E_f": 30,
+      "reversible": true,
+      "T_ref": 298.15,
+      "Rxn_orders_f": {
+        "intermediate2": 1,
+        "CAT": 1
+      },
+      "Rxn_orders_b": ""
+    }
+  }
+}

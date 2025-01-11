@@ -1,0 +1,628 @@
+[
+  {
+    "trial_num": 4,
+    "test_original_idx": 0,
+    "predicted_output": {
+      "rxn1": {
+        "reactants": {
+          "starting_material": 1,
+          "reagent": 1,
+          "base": 1
+        },
+        "products": {
+          "product": 1,
+          "base": 1
+        },
+        "k_f": 0.01,
+        "E_f": 70000.0,
+        "reversible": false,
+        "T_ref": 323.15,
+        "Rxn_orders_f": {
+          "starting_material": 1,
+          "reagent": 1,
+          "base": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn2": {
+        "reactants": {
+          "product": 1,
+          "reagent": 1,
+          "base": 1
+        },
+        "products": {
+          "byproduct": 1
+        },
+        "k_f": 0.2,
+        "E_f": 78000.0,
+        "reversible": false,
+        "T_ref": 323.15,
+        "Rxn_orders_f": {
+          "product": 1,
+          "reagent": 1,
+          "base": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "actual_output": {
+      "rxn1": {
+        "reactants": {
+          "starting_material": 1,
+          "reagent": 1,
+          "base": 1
+        },
+        "products": {
+          "product": 1,
+          "base": 1
+        },
+        "k_f": 0.01,
+        "E_f": 70000.0,
+        "reversible": false,
+        "T_ref": 323.15,
+        "Rxn_orders_f": {
+          "starting_material": 1,
+          "reagent": 1,
+          "base": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn2": {
+        "reactants": {
+          "product": 1,
+          "reagent": 1,
+          "base": 1
+        },
+        "products": {
+          "byproduct": 1
+        },
+        "k_f": 0.2,
+        "E_f": 78000.0,
+        "reversible": false,
+        "T_ref": 323.15,
+        "Rxn_orders_f": {
+          "product": 1,
+          "reagent": 1,
+          "base": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "accuracy": 1.0
+  },
+  {
+    "trial_num": 4,
+    "test_original_idx": 3,
+    "predicted_output": {
+      "rxn1": {
+        "reactants": {
+          "starting_material": 2,
+          "reagent": 1,
+          "base": 1
+        },
+        "products": {
+          "product": 1,
+          "base": 1
+        },
+        "k_f": 0.01,
+        "E_f": 70000.0,
+        "reversible": true,
+        "T_ref": 323.15,
+        "Rxn_orders_f": {
+          "starting_material": 1,
+          "reagent": 1,
+          "base": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn2": {
+        "reactants": {
+          "product": 1,
+          "reagent": 2,
+          "base": 2
+        },
+        "products": {
+          "byproduct": 1
+        },
+        "k_f": 0.2,
+        "E_f": 78000.0,
+        "reversible": true,
+        "T_ref": 323.15,
+        "Rxn_orders_f": {
+          "product": 1,
+          "reagent": 1,
+          "base": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "actual_output": {
+      "rxn1": {
+        "reactants": {
+          "starting_material": 2,
+          "reagent": 1,
+          "base": 1
+        },
+        "products": {
+          "product": 1,
+          "base": 1
+        },
+        "k_f": 0.01,
+        "E_f": 70000.0,
+        "reversible": true,
+        "T_ref": 323.15,
+        "Rxn_orders_f": {
+          "starting_material": 1,
+          "reagent": 1,
+          "base": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn2": {
+        "reactants": {
+          "product": 1,
+          "reagent": 2,
+          "base": 2
+        },
+        "products": {
+          "byproduct": 1
+        },
+        "k_f": 0.2,
+        "E_f": 78000.0,
+        "reversible": true,
+        "T_ref": 323.15,
+        "Rxn_orders_f": {
+          "product": 1,
+          "reagent": 1,
+          "base": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "accuracy": 1.0
+  },
+  {
+    "trial_num": 4,
+    "test_original_idx": 10,
+    "predicted_output": {
+      "rxn1": {
+        "reactants": {
+          "diene": 1,
+          "dienophile": 1
+        },
+        "products": {
+          "product": 1
+        },
+        "k_f": 0.01,
+        "E_f": 50000.0,
+        "reversible": false,
+        "T_ref": 313.15,
+        "Rxn_orders_f": {
+          "diene": 1,
+          "dienophile": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "actual_output": {
+      "rxn1": {
+        "reactants": {
+          "A": 1,
+          "B": 1
+        },
+        "products": {
+          "C": 1
+        },
+        "k_f": 100.0,
+        "E_f": 20,
+        "reversible": false,
+        "T_ref": 313.15,
+        "Rxn_orders_f": {
+          "A": 1,
+          "B": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "accuracy": 1.0
+  },
+  {
+    "trial_num": 4,
+    "test_original_idx": 12,
+    "predicted_output": {
+      "rxn1": {
+        "reactants": {
+          "A": 2,
+          "B": 1
+        },
+        "products": {
+          "C": 1
+        },
+        "k_f": 100.0,
+        "E_f": 20,
+        "reversible": true,
+        "T_ref": 313.15,
+        "Rxn_orders_f": {
+          "A": 2,
+          "B": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "actual_output": {
+      "rxn1": {
+        "reactants": {
+          "A": 2,
+          "B": 1
+        },
+        "products": {
+          "C": 1
+        },
+        "k_f": 100.0,
+        "E_f": 20,
+        "reversible": true,
+        "T_ref": 313.15,
+        "Rxn_orders_f": {
+          "A": 1,
+          "B": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "accuracy": 1.0
+  },
+  {
+    "trial_num": 4,
+    "test_original_idx": 18,
+    "predicted_output": {
+      "rxn1": {
+        "reactants": {
+          "SM": 2,
+          "reagent": 1
+        },
+        "products": {
+          "intermediate": 1
+        },
+        "k_f": 100.0,
+        "E_f": 20,
+        "reversible": false,
+        "T_ref": 233.15,
+        "Rxn_orders_f": {
+          "SM": 1,
+          "reagent": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn2": {
+        "reactants": {
+          "intermediate": 1
+        },
+        "products": {
+          "product": 1
+        },
+        "k_f": 0.2,
+        "E_f": 30,
+        "reversible": true,
+        "T_ref": 233.15,
+        "Rxn_orders_f": {
+          "intermediate": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "actual_output": {
+      "rxn1": {
+        "reactants": {
+          "SM": 2,
+          "reagent": 1
+        },
+        "products": {
+          "intermediate": 1
+        },
+        "k_f": 100.0,
+        "E_f": 20,
+        "reversible": false,
+        "T_ref": 233.15,
+        "Rxn_orders_f": {
+          "SM": 1,
+          "reagent": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn2": {
+        "reactants": {
+          "intermediate": 1
+        },
+        "products": {
+          "product": 1
+        },
+        "k_f": 0.2,
+        "E_f": 30,
+        "reversible": true,
+        "T_ref": 233.15,
+        "Rxn_orders_f": {
+          "intermediate": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "accuracy": 1.0
+  },
+  {
+    "trial_num": 4,
+    "test_original_idx": 21,
+    "predicted_output": {
+      "rxn1": {
+        "reactants": {
+          "SM": 2,
+          "CAT": 1
+        },
+        "products": {
+          "intermediate1": 1
+        },
+        "k_f": 100.0,
+        "E_f": 20,
+        "reversible": true,
+        "T_ref": 298.15,
+        "Rxn_orders_f": {
+          "SM": 2,
+          "CAT": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn2": {
+        "reactants": {
+          "intermediate1": 1
+        },
+        "products": {
+          "intermediate2": 1
+        },
+        "k_f": 0.2,
+        "E_f": 30,
+        "reversible": true,
+        "T_ref": 298.15,
+        "Rxn_orders_f": {
+          "intermediate1": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn3": {
+        "reactants": {
+          "intermediate2": 1,
+          "CAT": 1
+        },
+        "products": {
+          "product": 1
+        },
+        "k_f": 0.2,
+        "E_f": 30,
+        "reversible": true,
+        "T_ref": 298.15,
+        "Rxn_orders_f": {
+          "intermediate2": 1,
+          "CAT": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "actual_output": {
+      "rxn1": {
+        "reactants": {
+          "SM": 2,
+          "CAT": 1
+        },
+        "products": {
+          "intermediate1": 1
+        },
+        "k_f": 100.0,
+        "E_f": 20,
+        "reversible": true,
+        "T_ref": 298.15,
+        "Rxn_orders_f": {
+          "SM": 1,
+          "CAT": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn2": {
+        "reactants": {
+          "intermediate1": 1
+        },
+        "products": {
+          "intermediate2": 1
+        },
+        "k_f": 0.2,
+        "E_f": 30,
+        "reversible": true,
+        "T_ref": 298.15,
+        "Rxn_orders_f": {
+          "intermediate1": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn3": {
+        "reactants": {
+          "intermediate2": 1,
+          "CAT": 1
+        },
+        "products": {
+          "product": 1
+        },
+        "k_f": 0.2,
+        "E_f": 30,
+        "reversible": true,
+        "T_ref": 298.15,
+        "Rxn_orders_f": {
+          "intermediate2": 1,
+          "CAT": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "accuracy": 1.0
+  },
+  {
+    "trial_num": 4,
+    "test_original_idx": 22,
+    "predicted_output": {
+      "rxn1": {
+        "reactants": {
+          "starting_material": 1,
+          "reagent": 1
+        },
+        "products": {
+          "intermediate": 1
+        },
+        "k_f": 100.0,
+        "E_f": 20,
+        "reversible": true,
+        "T_ref": 298.15,
+        "Rxn_orders_f": {
+          "starting_material": 1,
+          "reagent": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn2": {
+        "reactants": {
+          "intermediate": 1,
+          "base": 1
+        },
+        "products": {
+          "product": 1,
+          "byproduct": 1
+        },
+        "k_f": 0.2,
+        "E_f": 30,
+        "reversible": false,
+        "T_ref": 298.15,
+        "Rxn_orders_f": {
+          "intermediate": 1,
+          "base": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "actual_output": {
+      "rxn1": {
+        "reactants": {
+          "SM": 1,
+          "reagent": 1
+        },
+        "products": {
+          "intermediate": 1
+        },
+        "k_f": 100.0,
+        "E_f": 20,
+        "reversible": true,
+        "T_ref": 298.15,
+        "Rxn_orders_f": {
+          "SM": 1,
+          "reagent": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn2": {
+        "reactants": {
+          "intermediate": 1,
+          "base": 1
+        },
+        "products": {
+          "product": 1,
+          "byproduct": 1
+        },
+        "k_f": 0.2,
+        "E_f": 30,
+        "reversible": false,
+        "T_ref": 298.15,
+        "Rxn_orders_f": {
+          "intermediate": 1,
+          "base": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "accuracy": 1.0
+  },
+  {
+    "trial_num": 4,
+    "test_original_idx": 24,
+    "predicted_output": {
+      "rxn1": {
+        "reactants": {
+          "SM1": 1,
+          "catalyst": 2
+        },
+        "products": {
+          "intermediate1": 1
+        },
+        "k_f": 100.0,
+        "E_f": 20,
+        "reversible": true,
+        "T_ref": 298.15,
+        "Rxn_orders_f": {
+          "SM1": 1,
+          "catalyst": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn2": {
+        "reactants": {
+          "intermediate1": 1,
+          "SM2": 1
+        },
+        "products": {
+          "product": 1
+        },
+        "k_f": 0.2,
+        "E_f": 30,
+        "reversible": true,
+        "T_ref": 298.15,
+        "Rxn_orders_f": {
+          "intermediate1": 1,
+          "SM2": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "actual_output": {
+      "rxn1": {
+        "reactants": {
+          "SM1": 1,
+          "catalyst": 2
+        },
+        "products": {
+          "intermediate": 1
+        },
+        "k_f": 100.0,
+        "E_f": 20,
+        "reversible": true,
+        "T_ref": 298.15,
+        "Rxn_orders_f": {
+          "SM1": 1,
+          "catalyst": 1
+        },
+        "Rxn_orders_b": ""
+      },
+      "rxn2": {
+        "reactants": {
+          "intermediate": 1,
+          "SM2": 1
+        },
+        "products": {
+          "product": 1
+        },
+        "k_f": 0.2,
+        "E_f": 30,
+        "reversible": true,
+        "T_ref": 298.15,
+        "Rxn_orders_f": {
+          "intermediate": 1,
+          "SM2": 1
+        },
+        "Rxn_orders_b": ""
+      }
+    },
+    "accuracy": 1.0
+  }
+]
