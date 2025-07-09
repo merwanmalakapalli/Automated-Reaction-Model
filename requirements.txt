@@ -1,0 +1,9 @@
+Flask
+Gunicorn
+numpyro
+jax
+pandas
+arviz
+prettytable
+scikit-optimize
+openpyxl
