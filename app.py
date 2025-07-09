@@ -66,4 +66,4 @@ def run():
     return Response(generate_bytes(at.run_automated(file_buffer, [0.1,0,0,0.9,0.1], final_timepoint, interval, k1, k2, E1, E2, species_dict, templow, temphigh, tolerance)), mimetype="text/plain")
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000,debug=True)
+    app.run(host='0.0.0.0', debug=True)
