@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Automated Reaction Model</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        label { display: block; margin-top: 10px; }
+        input[type="number"] { width: 60px; }
+        #output { 
+            margin-top: 20px; 
+            white-space: pre-wrap; 
+            background: #f0f0f0; 
+            padding: 10px; 
+            height: 1000px; 
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+        }
+        button { margin-top: 15px; padding: 10px 20px; }
+    </style>
+</head>
+<body>
+    <h1>Automated Reaction Model</h1>
+    <form id="runForm" enctype="multipart/form-data">
+        <label>
+            Experimental Data File (Excel Sheet):
+            <input type="file" name="file1" id="file1" required />
+        </label>
+
+        <label>Time and Interval timepoints:</label>
+        <input type="number" step="any" name="Final" value="1380" required />
+        <input type="number" step="any" name="Interval" value="60" required />
+
+        <label>Kinetic Parameter Estimations (k1, E1, k2, E2):</label>
+        <input type="number" step="any" name="k1" value="0.1" required />
+        <input type="number" step="any" name="E1" value="70000" required />
+        <input type="number" step="any" name="k2" value="0.1" required />
+        <input type="number" step="any" name="E2" value="70000" required />
+        <br />
+
+        <label>For Optimization: Initial Species and Maximum Concentration (minimum assumed to be 0):</label><br />
+        <label>Temperature (Celsius) Range (Low, High):</label>
+        <input type="number" step="any" name="templow" value="50" required />
+        <input type="number" step="any" name="temphigh" value="120" required />
+
+        <label>Impurity Tolerance Percentage:</label>
+        <input type="number" step="any" name="imptol" value="0.5" required />
+
+        <button type="button" id="autofill-btn">Autofill Species</button>
+        <div id="species-container">
+        <script>
+            document.getElementById("autofill-btn").addEventListener("click", function () {
+                const container = document.getElementById("species-container");
+                const formData = new FormData();
+                const fileInput = document.getElementById("file1");
+                const file = fileInput.files[0];
+                formData.append("file1", file); 
+                fetch("/get_init_species", {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                    alert("Error: " + data.error);
+                    return;
+                    }
+
+                    container.innerHTML = ""; // Clear any existing entries
+
+                    data.species.forEach(speciesName => {
+                    const entry = document.createElement("div");
+                    entry.className = "species-entry";
+
+                    const nameInput = document.createElement("input");
+                    nameInput.type = "text";
+                    nameInput.name = "species_name[]";
+                    nameInput.placeholder = "Species name (e.g. SM)";
+                    nameInput.value = speciesName;
+
+                    const valueInput = document.createElement("input");
+                    valueInput.type = "number";
+                    valueInput.name = "species_value[]";
+                    valueInput.placeholder = "Initial concentration";
+                    valueInput.step = "any";
+
+                    const removeBtn = document.createElement("button");
+                    removeBtn.type = "button";
+                    removeBtn.textContent = "Remove";
+                    removeBtn.onclick = () => container.removeChild(entry);
+
+                    entry.appendChild(nameInput);
+                    entry.appendChild(valueInput);
+                    entry.appendChild(removeBtn);
+                    container.appendChild(entry);
+                    });
+                })
+                .catch(error => {
+                    alert("Request failed: " + error);
+                });
+            });
+        </script>
+
+
+
+        <br />
+        </div>
+
+        <button type="button" onclick="addSpecies()">Add Species</button>
+        <br />
+        <script>
+        function addSpecies() {
+            const container = document.getElementById("species-container");
+            const entry = document.createElement("div");
+            entry.className = "species-entry";
+            entry.innerHTML = `
+            <input type="text" name="species_name[]" placeholder="Species name (e.g. SM)" required />
+            <input type="number" step="any" name="species_value[]" placeholder="Initial concentration" required />
+            <button type="button" onclick="removeSpecies(this)">Remove</button>
+            `;
+            container.appendChild(entry);
+        }
+
+        function removeSpecies(button) {
+            button.parentElement.remove();
+        }
+        </script>
+
+        <button type="submit">Run Model</button>
+    </form>
+
+    <div id="output"></div>
+    <div id="image-container"></div>
+    <script>
+        const form = document.getElementById('runForm');
+        const output = document.getElementById('output');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            output.innerHTML = `
+                    <div id="progress-container" style="width: 100%; background: #eee; height: 30px; border-radius: 8px; margin-bottom: 10px;">
+                        <div id="spinner" style="font-family: monospace; margin-top: 10px;">Running</div>
+                        <div id="progress-bar" style="height: 100%; width: 0%; background-color: #4CAF50; text-align: center; color: white; line-height: 30px; border-radius: 8px;">0%</div>
+                    </div>
+                    <pre id="text-stream">Running model, may take a few minutes...\n</pre>
+                `;
+
+
+            const formData = new FormData(form);
+
+            const response = await fetch('/run', {
+                method: 'POST',
+                body: formData
+            });
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder('utf-8');
+
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+                const chunk = decoder.decode(value, { stream: true });
+                if (chunk.includes("...")) {
+                    const spinnerFrames = ["|", "/", "-", "\\"];
+                    let spinnerIndex = 0;
+                    const spinnerElem = document.getElementById("spinner");
+
+                    const spinnerInterval = setInterval(() => {
+                        spinnerElem.textContent = "Running   " + spinnerFrames[spinnerIndex];
+                        spinnerIndex = (spinnerIndex + 1) % spinnerFrames.length;
+                    }, 150); // Update every 150ms
+                }
+                const textStream = document.getElementById("text-stream");
+                const lines = chunk.split("\n");
+                for (const line of lines) {
+                    // const match = line.match(/Progress:\s*(\d+)%/i);
+                    const match = line.match(/%/);
+                    if (match) {
+                        const percent = parseInt(match[1]);
+                        const bar = document.getElementById("progress-bar");
+                        bar.style.width = percent + "%";
+                        bar.textContent = percent + "%";
+                    } else {
+                        // Only append non-progress lines
+                        document.getElementById("text-stream").textContent += line + "\n";
+                    }
+                }
+
+
+                // Update progress bar if percentage is found
+                const match = chunk.match(/Progress:\s*(\d+)%/i);
+                if (match) {
+                    const percent = parseInt(match[1]);
+                    const bar = document.getElementById("progress-bar");
+                    bar.style.width = percent + "%";
+                    bar.textContent = percent + "%";
+                }
+
+                output.scrollTop = output.scrollHeight;
+            }
+
+            output.textContent += "\n--- Done ---";
+            const viewImgBtn = document.createElement("button");
+            viewImgBtn.textContent = "Open Plots in New Tab";
+            viewImgBtn.style.display = "block";
+            viewImgBtn.style.marginTop = "10px";
+            viewImgBtn.onclick = () => {
+                window.open("/static/my_plot.png", "_blank");
+            };
+
+            // Append the button to the output container
+            output.appendChild(viewImgBtn);
+
+            document.getElementById("image-container").appendChild(img);
+        });
+        
+    </script>
+</body>
+</html>

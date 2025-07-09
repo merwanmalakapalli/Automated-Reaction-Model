@@ -56,10 +56,19 @@ class SymbolicRXNSolver():
         Returns:
             int: Number of unique species.
         """
-        all_species = set(species for reaction_info in self.reactions.values() for species in reaction_info['reactants'])
-        all_species.update(species for reaction_info in self.reactions.values() for species in reaction_info['products'])
+        # all_species = set(species for reaction_info in self.reactions.values() for species in reaction_info['reactants'])
+        # all_species.update(species for reaction_info in self.reactions.values() for species in reaction_info['products'])
+        # all_species = ['SM', 'reagent', 'base', 'IMP1', 'product']
+        all_species = list(dict.fromkeys(
+            species
+            for reaction_info in self.reactions.values()
+            for species in list(reaction_info['reactants']) + list(reaction_info['products'])
+        ))
         return len(all_species), all_species
     
+    def get_all_species(self):
+        return self.all_species
+
     def _get_reference_T(self):
         self.T_ref = [reaction['T_ref'] for reaction in self.reactions.values()]
         return self.T_ref
@@ -255,7 +264,43 @@ class SymbolicRXNSolver():
 
         return dC_dt
 
+    """
+    Prepares and stores static data for simulating symbolic ODEs with NumPyro.
 
+    This function initializes model state by:
+    - Extracting unique initial concentration conditions from X
+    - Computing species padding for ODE solving
+    - Building stoichiometric and reaction order matrices for forward and backward reactions
+    - Computing repeat counts for each unique condition
+    - Mapping species names to their indices and acquisition weights
+
+    Args:
+        X (jnp.array): Input array of shape (N, D) or (D,) where each row (or vector) consists of:
+                       [temperature, concentrations of initial species, time].
+        t (jnp.array): Array of time points at which to solve the ODEs.
+        initial_species (list of str): Names of species whose concentrations are provided in X.
+        acq_weight (list of float): Weights applied to each species output in the acquisition function.
+
+    Side Effects:
+        Sets the following attributes on the object:
+            - self.initial_species
+            - self.time, self.time_t
+            - self.acq_weight
+            - self.unique_rows
+            - self.unique_intial_conditions_num
+            - self.list_n_values
+            - self.k_matrix_coeff
+            - self.reaction_order_matrix
+            - self.indices
+
+    Notes:
+        This is a JAX-compatible setup step designed for use with NumPyro inference.
+        It assumes the system has already been configured with:
+            - self.num_species
+            - self.all_species
+            - self.ode_k_type_matrix_f / b (stoichiometric matrices)
+            - self.reaction_order_dict_f / b (reaction orders)
+    """
     def initilize_ODE_solver_for_numpyro_input(self, X:jnp.array, t:jnp.array, initial_species:list, acq_weight: list):
         """
         Saves static values for JAX (temporary solution)
@@ -290,7 +335,7 @@ class SymbolicRXNSolver():
         self.unique_rows                      = unique_rows
         self.unique_intial_conditions_num     = len(counts)
 
-        print(self.unique_intial_conditions_num)
+        # print(self.unique_intial_conditions_num)
 
 
 
@@ -304,9 +349,10 @@ class SymbolicRXNSolver():
 
         column_names  = self.initial_species
         # name_combined = list(set(OrderedDict.fromkeys(column_names + list(self.all_species - set(column_names)))))
-        name_combined = initial_species + [name for name in self.all_species if name not in initial_species]
+        # name_combined = initial_species + [name for name in self.all_species if name not in initial_species]
+        name_combined = self.all_species
         name_combined = list(dict.fromkeys(name_combined))
-        print(name_combined)
+        # print(name_combined)
         # create k type matrix based on the initial names provdided
 
         k_matrix_coeff_f = jnp.array(list(map(lambda col: self.ode_k_type_matrix_f.get(col, 0), name_combined)), dtype=int)
@@ -324,13 +370,30 @@ class SymbolicRXNSolver():
         indices = [name_to_index[name] for name in initial_species if name in name_to_index]
         self.indices = indices
         self.initial_species = initial_species
-        print(f'The list of indices used to solve the ODE system is: {name_to_index}')
+        # print(f'The list of indices used to solve the ODE system is: {name_to_index}')
         name_to_index = {key: weight for key, weight in zip(name_to_index.keys(), self.acq_weight)}
-        print(f'Acq function weights: {name_to_index}')
+        # print(f'Acq function weights: {name_to_index}')
 
+    """
+        Simulates a system of ODEs and returns a scalar output based on weighted final species concentrations.
+        Used to compare model output to observed data
 
+        This method is optimized for use with NumPyro
 
+        If multiple samples are passed, it efficiently solves only for the unique initial conditions,
+        then maps the solution to the original input structure using repeat logic.
+        
+        Used for probabilistic analysis and running Bayesian inference (training)
 
+        Args:
+            X (jnp.array): Input array. If 1D: [T, C0_1, C0_2, ..., tf]; 
+                          if 2D: shape (N, M), where columns are [T, C0_1, ..., C0_k, tf].
+            params (dict): Dictionary of kinetic parameters (e.g., rate constants, activation energies).
+
+        Returns:
+            jnp.array: A scalar or vector of objective function values computed using `acq_weight` applied to
+                       concentrations at the target time `tf`. The output is suitable for probabilistic modeling.
+        """
     def simulate_symbolic_ode_for_numpyro(self, X:jnp.array, params: dict)->jnp.array:
         """
         Generates a system of ODEs and solves it.
@@ -414,7 +477,24 @@ class SymbolicRXNSolver():
 
         return jnp.array(out)
 
+    """
+        Simulates a system of ODEs and returns the full concentration profiles over time.
 
+        This variant is useful when you want access to all time points for every species,
+        instead of a single weighted output. It otherwise uses the same efficient logic
+        for batching unique initial conditions as `simulate_symbolic_ode_for_numpyro`.
+        
+        Used for probabilistic analysis and Bayesian inference predictions (experimental data) 
+
+        Args:
+            X (jnp.array): Input array. If 1D: [T, C0_1, C0_2, ..., tf]; 
+                          if 2D: shape (N, M), where columns are [T, C0_1, ..., C0_k, tf].
+            params (dict): Dictionary of kinetic parameters (e.g., rate constants, activation energies).
+
+        Returns:
+            jnp.array: Array of shape (time_points, N, num_species), representing the full
+                       simulation results for each initial condition over time.
+        """
     def simulate_symbolic_ode_for_numpyro_C_out(self, X:jnp.array, params: dict)->jnp.array:
             """
             Generates a system of ODEs and solves it.
@@ -442,7 +522,7 @@ class SymbolicRXNSolver():
                 num_species_padding = self.num_species - initial_condition_C.shape[1]
                 initial_condition_C_all = jnp.concatenate([initial_condition_C, jnp.zeros((initial_condition_C.shape[0], num_species_padding))], axis=1)
 
-            # only run ODE intergator once for each unique initial conditions
+            # only run ODE integrator once for each unique initial conditions; collapses identical rows
             unique_rows, indices, counts      = jnp.unique(initial_condition_C_all, axis=0, return_index=True, return_counts=True, size=self.unique_intial_conditions_num)
             # unique_rows, indices, counts      = jnp.unique(initial_condition_C_all, axis=0, return_index=True, return_counts=True)
 
@@ -455,12 +535,13 @@ class SymbolicRXNSolver():
             # for i in range(0, len(self.initial_species)):
             #     sorted_unique_intial_conditions =  sorted_unique_intial_conditions.at[:,self.indices[i]].set(unique_intial_conditions[:,i])
 
+            # solves ODE, sys_odes_ is rate equation (dy/dt = f(y,t))
             C_solutions = odeint(self.sys_odes_, unique_intial_conditions, time, params, unique_T)
             # C_solutions = odeint(self.sys_odes_, sorted_unique_intial_conditions, time, params, unique_T)
 
             combined_array = jnp.zeros((len(time), 0, self.num_species))
 
-
+            # expand back to full dataset
             for i in range(self.unique_intial_conditions_num):
                 array_helper = jnp.repeat(C_solutions[:,i, :], self.list_n_values[i], axis=0).reshape((self.time.shape[0], self.list_n_values[i], self.num_species))
                 combined_array = jnp.concatenate((combined_array, array_helper), axis=1)
@@ -471,9 +552,27 @@ class SymbolicRXNSolver():
             
             return C_solutions
 
+    """
+        General-purpose ODE simulation for symbolic chemical kinetics, returning full time-course results.
 
-    
+        This method is designed for symbolic model building or diagnostics. It computes forward and
+        backward rate constants using Arrhenius equations, constructs rate matrices based on a
+        specified ordering of species, and integrates the system using `odeint`.
 
+        Unlike the previous two methods, this function does not use the de-duplication trick
+        for repeated initial conditions. It focuses on clarity and flexibility for simulation.
+
+        Args:
+            X (jnp.array): Input array of shape (N, M) or (M,), where columns/entries are [T, C0_1, ..., C0_k].
+            params (dict): Dictionary of kinetic parameters, including k_f, k_b, E_f, E_b for each reaction.
+            time (jnp.array): Array of time points to evaluate the system over.
+            initial_species (list): List of species provided in `X` (used to align with internal species order).
+
+        Returns:
+            Tuple[jnp.array, list]: 
+                - Array of shape (time_points, N, num_species) with ODE solutions.
+                - List of species names ordered as in the output concentrations.
+        """
     def simulate_symbolic_ode_(self, X: jnp.array, params: dict, time: jnp.array, initial_species: list)-> jnp.array:
         """
         Generates a system of ODEs and solves it.
@@ -509,7 +608,6 @@ class SymbolicRXNSolver():
         # name_combined = list(set(OrderedDict.fromkeys(column_names + list(self.all_species - set(column_names)))))
         name_combined = initial_species + [name for name in self.all_species if name not in initial_species]
         name_combined = list(dict.fromkeys(name_combined))
-        print(name_combined)
         T_broadcasted = T.reshape((-1, 1))
 
 

@@ -1,0 +1,51 @@
+Experiment #,Mechanism,Probability
+0,"SM + B + R -> P + B,  P + B + R -> IMP2 + B",0.22
+0,"SM + B + R -> P + B,  SM + P + B -> IMP2 + B",0.11
+0,"SM + B + R -> B + INT1,  B + INT1 -> P + B",0.08
+0,"SM + B + R -> P + B,  P + B -> IMP2 + B",0.05
+0,"SM + B + R -> B + INT1,  B + INT1 -> P + IMP2 + B",0.05
+0,"SM + B + R -> P + B + INT1,  P + R + INT1 -> IMP2",0.04
+0,"SM + R -> P,  SM + P -> IMP2",0.04
+0,"SM + B + R -> P + B,  B + R -> IMP2 + B",0.03
+0,"SM + B + R -> P + B,  SM + B -> IMP2 + B",0.03
+0,"SM + R -> P,  P + R -> IMP2",0.03
+0,"SM + C + B + R -> P + B,  SM + P + B -> IMP2 + C + B",0.03
+0,"SM + R -> P,  P -> IMP2",0.03
+0,"SM + B -> B + INT1,  B + R + INT1 -> P + B",0.03
+0,"SM + B + R -> B + INT1,  B + R + INT1 -> P + B",0.03
+0,"SM + B + R -> B + INT1,  INT1 -> P + IMP2",0.02
+1,"SM + B + R -> P + B,  P + B + R -> IMP2 + B",0.22
+1,"SM + B + R -> P + B,  SM + P + B -> IMP2 + B",0.15
+1,"SM + R -> P,  SM + P -> IMP2",0.07
+1,"SM + B + R -> P + B + INT1,  P + R + INT1 -> IMP2",0.06
+1,"SM + B + R -> B + INT1,  B + INT1 -> P + IMP2 + B",0.06
+1,"SM + B + R -> B + INT1,  R + INT1 -> P + IMP2",0.05
+1,"SM + R -> P,  P + R -> IMP2",0.04
+1,"SM + B + R -> B + INT1,  B + R + INT1 -> P + B",0.04
+1,"SM + B + R -> B + INT1,  B + INT1 -> P + B",0.04
+1,"SM + B + R -> P + B,  SM + P -> IMP2",0.03
+1,"SM + B + R -> B + INT1,  INT1 -> P",0.03
+1,"SM + R -> INT1,  INT1 -> P",0.03
+2,"SM + B + R -> P + B,  P + B + R -> IMP2 + B",0.28
+2,"SM + B + R -> P + B,  SM + P + B -> IMP2 + B",0.21
+2,"SM + B + R -> P + B + INT1,  P + R + INT1 -> IMP2",0.07
+2,"SM + B + R -> B + INT1,  B + R + INT1 -> P + B",0.07
+2,"SM + B + R -> B + INT1,  R + INT1 -> P + IMP2",0.06
+2,"SM + B + R -> B + INT1,  INT1 -> P",0.05
+2,"SM + B + R -> B + INT1,  B + INT1 -> P + IMP2 + B",0.04
+2,"SM + B + R -> B + INT1,  B + INT1 -> P + B",0.03
+3,"SM + B + R -> P + B,  SM + P + B -> IMP2 + B",0.23
+3,"SM + B + R -> P + B,  P + B + R -> IMP2 + B",0.15
+3,"SM + B + R -> B + INT1,  B + INT1 -> P + B",0.13
+3,"SM + B + R -> B + INT1,  INT1 -> P",0.12
+3,"SM + B + R -> B + INT1,  R + INT1 -> P + IMP2",0.08
+3,"SM + B + R -> B + INT1,  B + R + INT1 -> P + B",0.07
+3,"SM + B + R -> P + B + INT1,  P + R + INT1 -> IMP2",0.05
+4,"SM + B + R -> P + B,  P + B + R -> IMP2 + B",0.26
+4,"SM + B + R -> P + B,  SM + P + B -> IMP2 + B",0.22
+4,"SM + B + R -> B + INT1,  R + INT1 -> P",0.08
+4,"SM + B + R -> B + INT1,  B + R + INT1 -> P + B",0.07
+4,"SM + B + R -> P + B,  SM + P -> IMP2",0.06
+4,"SM + B + R -> P + B,  P + R -> IMP2",0.06
+4,"SM + C + B + R -> P + B,  P + B + R -> IMP2 + C + B",0.05
+4,"SM + B + R -> B + INT1,  B + INT1 -> P + B",0.04
