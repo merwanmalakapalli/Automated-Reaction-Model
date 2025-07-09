@@ -1,6 +1,0 @@
-boto3
-json
-litellm
-IPython
-futures
-ipywidgets
