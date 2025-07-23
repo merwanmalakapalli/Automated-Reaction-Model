@@ -904,7 +904,6 @@ def run_automated(file1, weights, final, interval, k1, k2, E1, E2, concentration
     final_product = C_out[-1, 0, 3]
     impurity = C_out[-1, 0, 4]
     total_conc = jnp.sum(C_out[-1, 0])
-    print(total_conc)
     # print("Optimal conditions: ", best_input)
     # print("Product: ", final_product)
     # print("Impurity: ", impurity)
@@ -913,6 +912,7 @@ def run_automated(file1, weights, final, interval, k1, k2, E1, E2, concentration
         name = param_keys[i]
         value = round(best_input[i], 3)
         yield f"    {name}: {value}\n"
+    yield f"Total Concentration: {total_conc:.3f}\n"
     yield f"Final product concentration: {final_product:.3f}\n"
     yield f"Final impurity concentration: {impurity:.3f}\n"
     yield f"Difference between product and impurity concentrations: {(final_product-impurity):.3f}\n"
