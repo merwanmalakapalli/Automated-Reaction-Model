@@ -6,17 +6,17 @@ from flask import jsonify
 
 import automated as at
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 def generate_bytes(generator):
     for chunk in generator:
         yield chunk.encode('utf-8') 
 
-@app.route("/")
+@application.route("/")
 def index():
     return render_template("index.html")
 
-@app.route("/get_init_species", methods=["POST"])
+@application.route("/get_init_species", methods=["POST"])
 def get_init_species_route():
     file1 = request.files.get("file1")
     if not file1:
@@ -30,7 +30,7 @@ def get_init_species_route():
         return jsonify({"error": str(e)}), 500
     
     
-@app.route("/run", methods=["POST"])
+@application.route("/run", methods=["POST"])
 def run():
     file1 = request.files.get("file1")
 
@@ -66,4 +66,4 @@ def run():
     return Response(generate_bytes(at.run_automated(file_buffer, [0.1,0,0,0.9,0.1], final_timepoint, interval, k1, k2, E1, E2, species_dict, templow, temphigh, tolerance)), mimetype="text/plain")
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000,debug=True)
+    application.run(host='0.0.0.0', port=5000,debug=True)
