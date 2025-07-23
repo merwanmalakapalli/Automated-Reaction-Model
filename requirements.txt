@@ -1,7 +1,7 @@
 Flask
 Gunicorn
-numpyro
-jax
+numpyro==0.18.0
+jax==0.6.1
 pandas
 arviz
 prettytable
